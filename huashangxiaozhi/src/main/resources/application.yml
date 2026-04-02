@@ -1,0 +1,88 @@
+server:
+  port: 8080
+
+
+#langchain4j测试模型
+#langchain4j.open-ai.chat-model.base-url=http://langchain4j.dev/demo/openai/v1
+#langchain4j.open-ai.chat-model.api-key=demo
+#langchain4j.open-ai.chat-model.model-name=gpt-4o-mini
+
+#DeepSeek
+#langchain4j.open-ai.chat-model.base-url=https://api.deepseek.com
+#langchain4j.open-ai.chat-model.api-key=${DEEPSEEK_KEY}
+
+#DeepSeek
+langchain4j:
+  open-ai:
+    chat-model:
+      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      api-key: ${aliQwen-api}
+      #model-name: deepseek-v3
+      model-name: deepseek-v3.2-exp
+      #温度系数：取值范围通常在 0 到 1 之间。值越高，模型的输出越随机、富有创造性；
+      # 值越低，输出越确定、保守。这里设置为 0.9，意味着模型会有一定的随机性，生成的回复可能会比较多样化。
+      temperature: 0.9
+  #DeepSeek-V3
+  #langchain4j.open-ai.chat-model.model-name=deepseek-chat
+      #DeepSeek-R1 推理模型
+  #langchain4j.open-ai.chat-model.model-name=deepseek-reasoner
+      #请求和响应日志
+      log-requests: true
+      log-responses: true
+
+  #ollama
+  ollama:
+    chat-model:
+      base-url: http://localhost:11434
+#      model-name: deepseek-r1:1.5b
+      model-name: qwen2.5-coder:3b
+      # 创造性控制
+      # 0.7到1.2‌：适用于需要较高创造性的场景，如诗歌生成或头脑风暴
+      # 0.3到1.0‌：适用于需要较高稳定性和多样性的场景，如技术文档或法律文书的生成
+      temperature: 0.8
+      # 模型进行通信的超时时间为60秒。
+      timeout: PT60S
+      log-requests: true
+      log-responses: true
+
+  #阿里百炼平台
+  community:
+    dashscope:
+      chat-model:
+        api-key: ${aliQwen-api}
+        model-name: qwen-max
+  
+  #????????-??????-v3
+      embedding-model:
+        api-key: ${aliQwen-api}
+        model-name: text-embedding-v3
+  
+  #????????-????
+      streaming-chat-model:
+        api-key: ${aliQwen-api}
+        model-name: qwen-plus
+  
+# 基本数据源配置
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/eduxiaozhi?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    #MongoDB连接配置 chat_memory_db ???
+  data:
+    mongodb:
+    uri: mongodb://localhost:27017/chat_memory_db
+# 开启 SQL 日志打印
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+
+#启用日志debug级别
+logging:
+  level:
+    root: info
+#    root: debug
